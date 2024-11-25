@@ -108,3 +108,5 @@ for batch in dataloader:
     break
 
 print("input_embeddings.shape = {}".format(input_embeddings.shape))
+print("input_embeddings contains embeddings of 8x4 = 32 tokens.")
+print("Each token's embedding is a vector of 256 elements.")
