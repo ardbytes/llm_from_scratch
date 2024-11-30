@@ -2,13 +2,14 @@ from importlib.metadata import version
 import os
 import urllib.request
 
-print("torch version:", version("torch"))
-print("tiktoken version:", version("tiktoken"))
+if __name__ == "__main__":
+    print("\n\n=============================== ch2/dataloader ===============================\n\n")
+    print("torch version:", version("torch"))
+    print("tiktoken version:", version("tiktoken"))
 
 import tiktoken
 import torch
 from torch.utils.data import Dataset, DataLoader
-
 
 class GPTDatasetV1(Dataset):
     def __init__(self, txt, tokenizer, max_length, stride):
@@ -64,7 +65,8 @@ encoded_text = tokenizer.encode(raw_text)
 ### Encode / Decode ###
 word = {tokenizer.decode([encoded_text[100]])}
 encoded_word = encoded_text[100]
-print(f"{encoded_text[100]} -> {tokenizer.decode([encoded_text[100]])}")
+if __name__ == "__main__":
+    print(f"{encoded_text[100]} -> {tokenizer.decode([encoded_text[100]])}")
 #######################
 
 
@@ -77,7 +79,8 @@ token_embedding_layer = torch.nn.Embedding(vocab_size, output_dim)
 
 ### Token Embeddings ###
 tensor = torch.tensor(encoded_text[100])
-print("Token Embedding for {} has shape {}.".format(word, token_embedding_layer(tensor).shape))
+if __name__ == "__main__":
+    print("Token Embedding for {} has shape {}.".format(word, token_embedding_layer(tensor).shape))
 ########################
 
 pos_embedding_layer = torch.nn.Embedding(context_length, output_dim)
@@ -88,8 +91,9 @@ dataloader = create_dataloader_v1(raw_text, batch_size=8, max_length=max_length,
 ### DataSet and DataLoader ###
 iterator = iter(dataloader)
 input_tokens, target_tokens = next(iterator)
-print("Tokens in dataloader: {}".format(input_tokens.numel() * len(iterator)))
-print("Tokens in text: {}".format(len(encoded_text)))
+if __name__ == "__main__":
+    print("Tokens in dataloader: {}".format(input_tokens.numel() * len(iterator)))
+    print("Tokens in text: {}".format(len(encoded_text)))
 ##############################
 
 for batch in dataloader:
@@ -100,13 +104,15 @@ for batch in dataloader:
     input_embeddings = token_embeddings + pos_embeddings
 
     ### Broadcast Addition ###
-    print("token_embeddings.shape = {}".format(token_embeddings.shape))
-    print("pos_embeddings.shape = {}".format(pos_embeddings.shape))
-    print("input_embeddings = token_embeddings + pos_embeddings by broadcast addition")
+    if __name__ == "__main__":
+        print("token_embeddings.shape = {}".format(token_embeddings.shape))
+        print("pos_embeddings.shape = {}".format(pos_embeddings.shape))
+        print("input_embeddings = token_embeddings + pos_embeddings by broadcast addition")
     ##########################
 
     break
 
-print("input_embeddings.shape = {}".format(input_embeddings.shape))
-print("input_embeddings contains embeddings of 8x4 = 32 tokens.")
-print("Each token's embedding is a vector of 256 elements.")
+if __name__ == "__main__":
+    print("input_embeddings.shape = {}".format(input_embeddings.shape))
+    print("input_embeddings contains embeddings of 8x4 = 32 tokens.")
+    print("Each token's embedding is a vector of 256 elements.")
